@@ -28,10 +28,10 @@ namespace XUnitTest
             Assert.Equal(act, expect);
         }
         [Fact]
-        public void GetUserDetails_InvalidArguments()
+        public void UserDetailsAreNull_InvalidArguments()
         {
-            Assert.Throws<ArgumentException>(() => ManageUsers.UserValidaton("", ""));
-            Assert.Throws<ArgumentException>(() => ManageUsers.UserValidaton("Sample", ""));
+            Assert.Throws<ArgumentException>(() => ManageUsers.NameValidaton("", ""));
+            Assert.Throws<ArgumentException>(() => ManageUsers.NameValidaton("Sample", ""));
         }
 
         [Theory]
@@ -40,19 +40,30 @@ namespace XUnitTest
         [InlineData(" Micheal", " Jackson   ", "MichealJackson")]
         public void AddingUser_WithCompleteDetails(string firstname, string lastname, string fullname)
         {
-            string fullnameResult = ManageUsers.UserValidaton(firstname, lastname);
+            string fullnameResult = ManageUsers.NameValidaton(firstname, lastname);
             Assert.Equal(fullname, fullnameResult);
         }
-        [Theory]
-        [InlineData("Charles", "selrahC", "selrahC")]
-        public void EditingUser_WillValidateUserName(string username, string UserName, string newuser)
-        {
+        
+        //[Theory]
+        //[InlineData("Charles", "selrahC", "selrahC")]
+        //public void EditingUser_WillValidateUserName(string username, string UserName, string newuser)
+        //{
 
-            string newUserName = ManageUsers.EditUser(UserName, username);
-            Assert.Equal(newUserName, newuser);
-        }
+        //    string newUserName = ManageUsers.EditUser(UserName, username);
+        //    Assert.Equal(newUserName, newuser);
+        //}
+        //[Fact]
+        //public void Delete_ValidateIfOkay()
+        //{
+            
+        //}
         [Fact]
-        public void DeleteTest_
+
+        public void PasswordValidation_IsInvalid()
+        {
+            Assert.Throws<ArgumentException>(() => ManageUsers.PasswordValidation("passwordnotvalid"));
+
+        }
     }
 }
 
