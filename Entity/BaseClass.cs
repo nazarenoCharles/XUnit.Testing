@@ -12,7 +12,7 @@ namespace Entity
             
             public Guid EntityID
             {
-                get { return EntityID; }
+                get { return this.uID; }
                 set { uID = value ;  } 
             }
 

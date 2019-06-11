@@ -7,24 +7,52 @@ using Xunit;
 using Entity;
 using Business;
 
+
 namespace XUnitTest
 {
     public class EntityTest
     {
+        readonly List<UsersModel> people = new List<UsersModel>();
+        readonly ManageUsers users = new ManageUsers();
+       
         [Theory]
-        [InlineData("blazt42", "Charles", "Nazareno", "passsample123")]
-        public void User_ShouldAddUser(string username, string firstname, string lastname, string password)
+        [InlineData("blazt42","samplepassword","Charles","Nazareno")]
+        [InlineData("SampleUser", "anotherpass","Janine", "Minorete")]
+        public void User_ShouldAddToTheList(string username, string password, string firstname, string lastname)
         {
-            UsersModel newUser = new UsersModel { UserName = username, FirstName = firstname, LastName = lastname, PassWord = password};
-            List<UsersModel> user = new List<UsersModel>();
-
-            ManageUsers.AddUserToUserlist(user, newUser);
-            user.Add(newUser);
-
-            int expected = 1;
-            int actual = user.Count;
-
-            Assert.Equal(expected, actual);
+            people.Add(users.AddingUser(username, password, firstname, lastname));
+            //Assign
+            int expect = 1;
+            //Act
+            int act = people.Count();
+            Assert.Equal(act, expect);
         }
+        [Fact]
+        public void GetUserDetails_InvalidArguments()
+        {
+            Assert.Throws<ArgumentException>(() => ManageUsers.UserValidaton("", ""));
+            Assert.Throws<ArgumentException>(() => ManageUsers.UserValidaton("Sample", ""));
+        }
+
+        [Theory]
+        [InlineData("Charles ", "  Nazareno  ", "CharlesNazareno")]
+        [InlineData(" John", "Wick", "JohnWick")]
+        [InlineData(" Micheal", " Jackson   ", "MichealJackson")]
+        public void AddingUser_WithCompleteDetails(string firstname, string lastname, string fullname)
+        {
+            string fullnameResult = ManageUsers.UserValidaton(firstname, lastname);
+            Assert.Equal(fullname, fullnameResult);
+        }
+        [Theory]
+        [InlineData("Charles", "selrahC", "selrahC")]
+        public void EditingUser_WillValidateUserName(string username, string UserName, string newuser)
+        {
+
+            string newUserName = ManageUsers.EditUser(UserName, username);
+            Assert.Equal(newUserName, newuser);
+        }
+        [Fact]
+        public void DeleteTest_
     }
 }
+
