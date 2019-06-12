@@ -10,7 +10,7 @@ namespace Business
 {
     public class ManageUsers : UsersModel
     {
-        readonly List<UsersModel> userlist = new List<UsersModel>();
+        
         
         //public void EditUser(string firstname, string lastname)
         //{
@@ -72,7 +72,10 @@ namespace Business
             }
             return $"{firstname.Trim()}{lastname.Trim()}".Trim();
         }
-
+        public void EditingUser(string username, string password, string firstname, string lastname)
+        {
+            
+        }
         public static bool PasswordValidation(string password)
         {
             //password business validation
@@ -107,19 +110,12 @@ namespace Business
                 return true;
             }
         }
-        public void UserDeletion(string username)
+        public void UserDeletion(List<UsersModel> userlist, string username)
         {
 
             userlist.RemoveAll(x => x.UserName == username);
-        }
-        //public static void AddUserToTheList(List<UsersModel> user, UsersModel person)
-        //{
-            
-        //}
-        //public void UserShouldEdit()
-        //{
 
-        //}
+        }
     }
 
 }
