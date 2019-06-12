@@ -28,15 +28,16 @@ namespace Business
         //    }
 
         //}
-        public ManageUsers AddingUser(string username, string password, string firstname, string lastname)
+        public static ManageUsers AddingUserandValidation(string username, string password, string firstname, string lastname)
         {
             ManageUsers person = new ManageUsers()
             {
-                UserName = "blast42",
-                PassWord = "pass",
-                FirstName = "charles",
-                LastName = "nazareno",
+                UserName = username,
+                PassWord = password,
+                FirstName = firstname,
+                LastName = lastname,
             };
+            //user validation
             if (string.IsNullOrWhiteSpace(person.FirstName))
             {
                 throw new ArgumentException("Invalid First name!", "FirstName");
@@ -53,12 +54,14 @@ namespace Business
             {
                 throw new ArgumentException("Invalid Password!", "PassWord");
             }
-           
+
             return person;
 
         }
+
         public static string NameValidaton( string firstname, string lastname)
         {
+            //validating if either firstname or lastname are null.
             if (string.IsNullOrWhiteSpace(firstname))
             {
                 throw new ArgumentException("First name must be provided.");
@@ -72,6 +75,7 @@ namespace Business
 
         public static bool PasswordValidation(string password)
         {
+            //password business validation
             var input = password;
            
             if (string.IsNullOrWhiteSpace(input))
@@ -85,17 +89,17 @@ namespace Business
 
             if (!hasLowerChar.IsMatch(input))
             {
-                throw new ArgumentException("Password should contain atleast one lower case character!");
+                throw new ArgumentException("Password should contain atleast one lower case character!", "PassWord");
                 
             }
             else if (!hasUpperChar.IsMatch(input))
             {
-                throw new ArgumentException("Password should contain atleast one upper case character!");
+                throw new ArgumentException("Password should contain atleast one upper case character!", "PassWord");
               
             }
             else if (!hasNumber.IsMatch(input))
             {
-                throw new ArgumentException("Password should contain a number!");
+                throw new ArgumentException("Password should contain a number!", "PassWord");
               
             }
             else
@@ -105,6 +109,7 @@ namespace Business
         }
         public void UserDeletion(string username)
         {
+
             userlist.RemoveAll(x => x.UserName == username);
         }
         //public static void AddUserToTheList(List<UsersModel> user, UsersModel person)
